@@ -1,4 +1,5 @@
-# Moodle Plugins Fetcher Plugin ![Moodle Plugin CI](https://github.com/ffhs/moodle-local_pluginsfetcher/workflows/Moodle%20Plugin%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/ffhs/moodle-local_pluginsfetcher/badge.svg?branch=main)](https://coveralls.io/github/ffhs/moodle-local_pluginsfetcher?branch=main)
+# Moodle Plugins Fetcher Plugin !
+[![Moodle Plugin CI](https://github.com/ffhs/moodle-local_pluginsfetcher/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/ffhs/moodle-local_pluginsfetcher/actions/workflows/moodle-ci.yml) [![Coverage Status](https://coveralls.io/repos/github/ffhs/moodle-local_pluginsfetcher/badge.svg?branch=main)](https://coveralls.io/github/ffhs/moodle-local_pluginsfetcher?branch=main)
 
 This plugin installs a new webservice `local_pluginsfetcher_get_information` which can be used to retrieve information about installed plugins.
 

@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_pluginsfetcher;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
@@ -33,7 +35,7 @@ require_once($CFG->libdir . '/externallib.php');
  * @copyright 2019 Adrian Perez <p.adrian@gmx.ch> {@link https://adrianperez.me}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class local_pluginsfetcher_external extends external_api {
+class local_pluginsfetcher_external extends \external_api {
 
     /**
      * Returns description of method parameters.
@@ -42,10 +44,10 @@ class local_pluginsfetcher_external extends external_api {
      */
     public static function get_information_parameters() {
         return new external_function_parameters(
-            array(
+            [
                 'type' => new external_value(PARAM_TEXT, 'The type of plugins to retrieve (optional).', VALUE_DEFAULT, null),
-                'contribonly' => new external_value(PARAM_INT, 'Get only additional installed (optional)..', VALUE_DEFAULT, null)
-            )
+                'contribonly' => new external_value(PARAM_INT, 'Get only additional installed (optional)..', VALUE_DEFAULT, null),
+            ]
         );
     }
 
@@ -64,10 +66,10 @@ class local_pluginsfetcher_external extends external_api {
         require_capability('moodle/site:config', $syscontext);
 
         $params = self::validate_parameters(self::get_information_parameters(),
-            array(
+            [
                 'type' => $type,
-                'contribonly' => $contribonly
-            )
+                'contribonly' => $contribonly,
+            ]
         );
 
         $pluginman = core_plugin_manager::instance();
@@ -101,12 +103,12 @@ class local_pluginsfetcher_external extends external_api {
     public static function get_information_returns() {
         return new external_multiple_structure(
             new external_single_structure(
-                array(
+                [
                     'type' => new external_value(PARAM_TEXT, 'The type'),
                     'name' => new external_value(PARAM_TEXT, 'The name'),
                     'versiondb' => new external_value(PARAM_TEXT, 'The installed version'),
-                    'release' => new external_value(PARAM_TEXT, 'The installed release')
-                ), 'plugins'
+                    'release' => new external_value(PARAM_TEXT, 'The installed release'),
+                ], 'plugins'
             )
         );
     }
@@ -120,7 +122,7 @@ class local_pluginsfetcher_external extends external_api {
      * @return array
      */
     protected static function get_plugins_by_parameters(object $pluginman, $type = null, $contribonly = false): array {
-        $plugins = array();
+        $plugins = [];
         $plugininfo = $pluginman->get_plugins();
 
         foreach ($plugininfo as $plugintype => $pluginnames) {
