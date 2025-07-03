@@ -15,31 +15,52 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Web service local plugin template external functions and service definitions.
+ * Web service function declarations for the local_pluginsfetcher plugin.
  *
  * @package   local_pluginsfetcher
  * @copyright 2019 Adrian Perez <p.adrian@gmx.ch> {@link https://adrianperez.me}
+ * @copyright 2025 Niels Gandraß <niels@gandrass.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+// @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // @codeCoverageIgnore
 
 // We defined the web service functions to install.
-$functions = array(
-        'local_pluginsfetcher_get_information' => array(
-                'classname' => 'local_pluginsfetcher_external',
-                'methodname' => 'get_information',
-                'classpath' => 'local/pluginsfetcher/externallib.php',
-                'description' => 'Return all installed plugins information.',
-                'type' => 'read',
-        )
-);
+$functions = [
+    'local_pluginsfetcher_get_info' => [
+        'classname' => 'local_pluginsfetcher\external\get_info',
+        'description' => 'Retrieves information about installed plugins and used software versions.',
+        'type' => 'read',
+        'ajax' => true,
+        'services' => [],
+        'capabilities' => 'moodle/site:config',
+    ],
+
+    'local_pluginsfetcher_get_information' => [
+        'classname' => 'local_pluginsfetcher\external\get_information',
+        'description' => 'Legacy API to retrieve information about installed plugins.',
+        'type' => 'read',
+        'ajax' => true,
+        'services' => [],
+        'capabilities' => 'moodle/site:config',
+    ],
+];
 
 // We define the services to install as pre-build services. A pre-build service is not editable by administrator.
-$services = array(
-        'Plugins fetcher' => array(
-                'functions' => array('local_pluginsfetcher_get_information'),
-                'restrictedusers' => 1,
-                'enabled' => 0
-        )
-);
+$services = [
+    'Plugins fetcher' => [
+        'functions' => [
+            'local_pluginsfetcher_get_info',
+        ],
+        'restrictedusers' => 1,
+        'enabled' => 1,
+    ],
+    'Plugins fetcher (legacy)' => [
+        'functions' => [
+            'local_pluginsfetcher_get_information',
+        ],
+        'restrictedusers' => 1,
+        'enabled' => 0,
+    ],
+];

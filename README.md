@@ -1,23 +1,203 @@
-# Moodle Plugins Fetcher Plugin ![Moodle Plugin CI](https://github.com/ffhs/moodle-local_pluginsfetcher/workflows/Moodle%20Plugin%20CI/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/ffhs/moodle-local_pluginsfetcher/badge.svg?branch=main)](https://coveralls.io/github/ffhs/moodle-local_pluginsfetcher?branch=main)
+# Moodle Plugins Fetcher
 
-This plugin installs a new webservice `local_pluginsfetcher_get_information` which can be used to retrieve information about installed plugins.
+[![Latest Version](https://img.shields.io/github/v/release/lucaboesch/moodle-local_pluginsfetcher)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/releases)
+[![PHP Support](https://img.shields.io/badge/PHP-7.4%20--%208.4-blue)](https://github.com/lucaboesch/moodle-local_pluginsfetcher)
+[![Moodle Support](https://img.shields.io/badge/Moodle-4.1%20--%205.0-orange)](https://github.com/lucaboesch/moodle-local_pluginsfetcher)
+[![GitHub Workflow Status: Moodle Plugin CI](https://img.shields.io/github/actions/workflow/status/lucaboesch/moodle-local_pluginsfetcher/moodle-plugin-ci.yml?label=Moodle%20Plugin%20CI)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/actions/workflows/moodle-plugin-ci.yml)
+[![Code Coverage](https://img.shields.io/coverallsCoverage/github/lucaboesch/moodle-local_pluginsfetcher)](https://coveralls.io/github/lucaboesch/moodle-local_pluginsfetcher)
+[![GitHub Issues](https://img.shields.io/github/issues/lucaboesch/moodle-local_pluginsfetcher)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lucaboesch/moodle-local_pluginsfetcher)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/pulls)
+[![Maintenance Status](https://img.shields.io/maintenance/yes/9999)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/)
+[![License](https://img.shields.io/github/license/lucaboesch/moodle-local_pluginsfetcher)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/blob/master/LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/lucaboesch/moodle-local_pluginsfetcher?style=social)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/lucaboesch/moodle-local_pluginsfetcher?style=social)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/network/members)
+[![GitHub Contributors](https://img.shields.io/github/contributors/lucaboesch/moodle-local_pluginsfetcher?style=social)](https://github.com/lucaboesch/moodle-local_pluginsfetcher/graphs/contributors)
 
-## Main features
+This plugin allows to share information about installed plugins and software versions via a secure Moodle webservice
+endpoint.
 
-There are two optional parameters which can be combined to fetch only given data:
+TODO TODO TODO TODO TODO
 
-| key         | value  | description                             |
-|-------------|--------|-----------------------------------------|
-| type        | string | Only given plugin types will be fetched |
-| contribonly | int    | Only additional plugins will be fetched |
+
+## Configuration and Usage
+
+During installation, the plugin will create two new external services:
+
+- `Plugins fetcher`: This is the primary service that allows you to fetch information about installed plugins and
+  software versions.
+- `Plugins fetcher (legacy)`: This external service provides a simple and backwards-compatible API for fetching basic
+  information about installed plugins.
+  - This service is disabled by default and must be enabled manually under _Site Administration > Server > External
+    services_.
+
+### Initial setup
+
+To start using the plugin, you need to:
+
+1. Add a new user to the list of _Authorised users_ for the `Plugins fetcher` service under _Site Administration >
+   Server > External services_. 
+2. Create a new web service token for the assigned user under _Site Administration > Plugins > Web services > Manage
+   tokens_.
+
+
+### API documentation
+
+You can find a full documentation of the API functions under _Site Administration > Server > Web services > API
+Documentation_.
+
+
+#### Example response
+
+The `local_pluginsfetcher_get_info` web service function returns a JSON object with the following structure:
+
+```json
+{
+    "plugins": [
+        {
+            "type": "mod",
+            "name": "quiz",
+            "displayname": "Quiz",
+            "version": 2024100700,
+            "release": null,
+            "requires": 2024100100,
+            "supported": [],
+            "isstandard": true,
+            "status": "uptodate"
+        },
+        {
+            "type": "auth",
+            "name": "email",
+            "displayname": "Email-based self-registration",
+            "version": 2024100700,
+            "release": null,
+            "requires": 2024100100,
+            "supported": [],
+            "isstandard": true,
+            "status": "uptodate"
+        },
+        {
+            "type": "local",
+            "name": "pluginsfetcher",
+            "displayname": "Plugins fetcher",
+            "version": 2021052405,
+            "release": "v3.11-r2",
+            "requires": 2022112800,
+            "supported": [
+                401,
+                500
+            ],
+            "isstandard": false,
+            "status": "uptodate"
+        },
+        [...]
+    ],
+    "pluginstats": {
+        "total": 461,
+        "standard": 448,
+        "contrib": 13
+    },
+    "software": {
+        "moodle": {
+            "version": 2024100703,
+            "release": "4.5.3 (Build: 20250317)",
+            "branch": 405
+        },
+        "php": {
+            "version": "8.2.28",
+            "versionid": "80228"
+        },
+        "db": {
+            "type": "pgsql"
+        },
+        "os": {
+            "name": "Linux",
+            "family": "Linux"
+        }
+    }
+}
+```
+
+### Example response (legacy web service)
+
+The `local_pluginsfetcher_get_information` web service function returns a JSON object with the following structure:
+
+```json
+[
+    {
+        "type": "mod",
+        "name": "quiz",
+        "version": 2024100700,
+        "release": null
+    },
+    {
+        "type": "auth",
+        "name": "email",
+        "version": 2024100700,
+        "release": "null"
+    },
+    {
+        "type": "local",
+        "name": "pluginsfetcher",
+        "version": 2021052405,
+        "release": "v3.11-r2"
+    },
+    [...]
+]
+```
+
+
 
 ## Installation
-1. Copy this plugin to the `local` directory of your Moodle instance: `git clone https://github.com/ffhs/moodle-local_pluginsfetcher.git local/pluginsfetcher`
-2. Visit the notifications page to complete the installation process
 
-For more information, visit [MoodleDocs](https://docs.moodle.org/311/en/Installing_plugins#Installing_manually_at_the_server) for installing contributed modules and plugins.
+This plugin can be installed like any other Moodle plugin by placing its source code inside your Moodle installation and
+executing the upgrade routine afterward.
 
-## Configuration
-1. Enable the pre-built service under [Site administration / Server / Web services / External services](https://FQDN/admin/settings.php?section=externalservices) with click on `Edit`
-2. Add the user to be used under `Autorised users`
-3. Create a `token` for this service `Plugins fetcher` and user under [Site administration / Server / Web services / Manage tokens](https://FQDN/admin/webservice/tokens.php?action=create). It's important that the user has the capability `moodle/site:config`.
+
+### Installing via the site administration (uploaded ZIP file)
+
+1. Download the latest release of this plugin.
+
+2. Log in to your Moodle site as an admin and go to _Site administration > Plugins > Install plugins_.
+3. Upload the ZIP file with the plugin code.
+4. Check the plugin validation report and finish the installation.
+
+
+### Installing manually
+
+The plugin can be also installed by putting the contents of this directory into
+
+```
+{your/moodle/dirroot}/local/pluginsfetcher
+```
+
+Afterwards, log in to your Moodle site as an admin and go to _Site administration > Notifications_ to complete the
+installation.
+
+Alternatively, you can run `php admin/cli/upgrade.php` from the command line to complete the installation.
+
+
+## Reporting a bug or requesting a feature
+
+If you find a bug or have a feature request, please open an issue via the [GitHub issue tracker](https://github.com/locaboesch/moodle-local_pluginsfetcher/issues).
+
+Please do not use the comments section within the Moodle plugin directory. Thanks :)
+
+
+## Testing
+
+You can find testing instructions for developers in the [TESTING.md](TESTING.md) file.
+
+
+## License
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <https://www.gnu.org/licenses/>.
