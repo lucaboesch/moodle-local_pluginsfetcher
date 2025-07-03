@@ -15,17 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information.
+ * Plugin version and other meta-data are defined here.
  *
  * @package   local_pluginsfetcher
  * @copyright 2019 Adrian Perez <p.adrian@gmx.ch> {@link https://adrianperez.me}
+ * @copyright 2025 Niels Gandraß <niels@gandrass.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+// @codingStandardsIgnoreLine
+defined('MOODLE_INTERNAL') || die(); // @codeCoverageIgnore
 
-$plugin->version  = 2021052401;
-$plugin->requires = 2021051700;
+$plugin->version  = 2021052404;
+$plugin->requires = 2022112800;
 $plugin->component = 'local_pluginsfetcher';
 $plugin->release = 'v3.11-r2';
+$plugin->supported = [401, 500];
 $plugin->maturity = MATURITY_STABLE;
