@@ -31,4 +31,4 @@ defined('MOODLE_INTERNAL') || die(); // @codeCoverageIgnore
 $string['pluginname'] = 'Plugins fetcher';
 
 // Privacy.
-$string['privacy:metadata'] = 'The Plugins fetcher does not store any personal data. It only exposes information that is stored in other parts of the system.';
+$string['privacy:metadata'] = 'Der Plugins fetcher speichert keine personenbezogenen Daten. Er stellt lediglich Informationen bereit, die in anderen Teilen des Systems gespeichert sind.';
