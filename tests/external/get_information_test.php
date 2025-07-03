@@ -33,7 +33,7 @@ final class get_information_test extends \advanced_testcase {
     /**
      * Test that users without the required capabilities are rejected
      *
-     * @covers \local_pluginsfetcher\external\et_info::execute
+     * @covers \local_pluginsfetcher\external\get_information::execute
      *
      * @return void
      * @throws \dml_exception

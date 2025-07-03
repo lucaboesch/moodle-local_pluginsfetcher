@@ -54,13 +54,13 @@ $services = [
             'local_pluginsfetcher_get_info',
         ],
         'restrictedusers' => 1,
-        'enabled' => 1
+        'enabled' => 1,
     ],
     'Plugins fetcher (legacy)' => [
         'functions' => [
             'local_pluginsfetcher_get_information',
         ],
         'restrictedusers' => 1,
-        'enabled' => 0
+        'enabled' => 0,
     ],
 ];
